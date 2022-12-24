@@ -2,9 +2,12 @@ import { type NextPage } from "next";
 import { trpc } from "../utils/trpc";
 import Container from "../components/container";
 import ListSite from "../components/list-site";
+import StartOnGithubButton from "../components/star-on-github-button";
 
 const Home: NextPage = () => {
-  const { data: blogs } = trpc.example.getAllSites.useQuery();
+  const { data: sites } = trpc.example.getAllSites.useQuery();
+
+  if (!sites) return <div>Loading...</div>;
 
   return (
     <>
@@ -23,7 +26,8 @@ const Home: NextPage = () => {
         src="https://umami-nu.vercel.app/umami.js"
       ></script>
       <Container>
-        <div className="mx-auto mt-24 max-w-xl">
+        <div className="mx-auto mt-32 flex max-w-xl flex-col items-center space-y-4">
+          <StartOnGithubButton />
           <h1 className="text-center text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl">
             <span className="bg-gradient-to-r from-yellow-500 to-orange-600 bg-clip-text font-extrabold text-transparent">
               Awesome open-source
@@ -36,7 +40,7 @@ const Home: NextPage = () => {
           </p>
         </div>
 
-        {blogs && <ListSite blogs={blogs} />}
+        {sites && <ListSite sites={sites} />}
       </Container>
     </>
   );
