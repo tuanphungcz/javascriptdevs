@@ -5,11 +5,10 @@ import ListSite from "../components/list-site";
 import GithubRepoButton from "../components/github-repo-button";
 import { PrimaryButton } from "../components/button";
 import Link from "next/link";
+import { Query } from "@tanstack/react-query";
 
 const Home: NextPage = () => {
   const { data: sites } = trpc.site.getAllActive.useQuery();
-
-  if (!sites) return <div>Loading...</div>;
 
   return (
     <>
@@ -48,7 +47,7 @@ const Home: NextPage = () => {
           </div>
         </div>
 
-        {sites && <ListSite sites={sites} />}
+        {sites && <ListSite sites={sites} category={null} tag={null} />}
       </Container>
     </>
   );
